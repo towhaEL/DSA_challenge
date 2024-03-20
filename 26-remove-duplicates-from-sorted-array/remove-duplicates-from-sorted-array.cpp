@@ -1,24 +1,27 @@
 class Solution {
 public:
     int removeDuplicates(vector<int>& nums) {
-        vector<int> tmp;
-        int tmp_i;
+        int len = nums.size();
+        pair<int, int> curr_count(nums[len-1], 0);
 
-        
-        tmp.push_back(nums[0]);
-        tmp_i = nums[0];
+        for(int i=len-1; i>=0; i--) {
+            if(nums[i] == curr_count.first) {
+                curr_count.second++;
+            } else {
+                curr_count.first = nums[i];
+                curr_count.second = 1;
+            }
 
-        for(int i=1; i<nums.size(); i++) {
-            if(tmp_i != nums[i]) {
-                tmp.push_back(nums[i]);
-                tmp_i = nums[i];
+            if(curr_count.second == 1) {
+                nums.push_back(nums[i]);
             } else {
                 continue;
-            }
+            }        
         }
 
-        nums = tmp;
-        return tmp.size();
+        reverse(nums.begin(), nums.end());
+
+        return nums.size() - len;
         
     }
 };
