@@ -1,18 +1,34 @@
 class Solution:
-    def findAnagrams(self, s: str, p: str) -> List[int]:
-        def isAnagram(i, j, str1, str2):
-            if sorted(str1[i : j+1]) == str2:
-                return True
-            else:
-                return False
+    def findAnagrams(self, s: str, t: str) -> List[int]:
+        result = []
+        if len(s) < len(t):
+            return result
 
-        i = 0
-        j = len(p)-1
-        ans = []
-        str2 = sorted(p)
-        while j < len(s):
-            if isAnagram(i, j, s, str2):
-                ans.append(i)
-            i+=1
-            j+=1
-        return ans
+        map = defaultdict(int)
+        for c in t:
+            map[c] += 1
+        counter = len(map)
+
+        begin = end = 0
+
+        while end<len(s):
+            c = s[end]
+            if c in map:
+                map[c] -= 1
+                if map[c] == 0:
+                    counter -= 1
+
+            end += 1
+
+            while counter == 0:
+                c = s[begin]
+                if c in map:
+                    map[c] += 1
+                    if map[c] > 0:
+                        counter += 1
+
+                if end-begin == len(t):
+                    result.append(begin)
+                begin += 1
+        
+        return result
