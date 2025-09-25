@@ -7,10 +7,10 @@ class Solution:
         while end < len(s):
             hashMap[s[end]] = hashMap.get(s[end], 0) + 1
             while hashMap[s[end]] > 1:
-                maxLen = max(maxLen, end-start)
                 hashMap[s[start]] -= 1
                 start += 1
 
+            maxLen = max(maxLen, end-start+1)
             end += 1
 
-        return max(maxLen, end-start)
+        return maxLen
