@@ -1,19 +1,16 @@
 class Solution:
     def lengthOfLongestSubstring(self, s: str) -> int:
+        hashMap = {}
+        start, end = 0, 0
         maxLen = 0
-        i = j = 0
 
-        map = defaultdict(int)
+        while end < len(s):
+            hashMap[s[end]] = hashMap.get(s[end], 0) + 1
+            while hashMap[s[end]] > 1:
+                maxLen = max(maxLen, end-start)
+                hashMap[s[start]] -= 1
+                start += 1
 
-        while j < len(s):
-            map[s[j]] += 1
+            end += 1
 
-            while map[s[j]] > 1:
-                map[s[i]] -= 1
-                i += 1
-
-            maxLen = max(maxLen, j-i+1)
-
-            j += 1
-
-        return maxLen
+        return max(maxLen, end-start)
