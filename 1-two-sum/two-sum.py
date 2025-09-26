@@ -3,11 +3,11 @@ class Solution:
         indexMap = {}
 
         for i in range(len(nums)):
-            indexMap[nums[i]] = i 
-
-        for i in range(len(nums)):
             complement = target - nums[i]
-            if complement in indexMap and i != indexMap[complement]:
+
+            if complement in indexMap:
                 return [i, indexMap[complement]]
+
+            indexMap[nums[i]] = i
 
        
